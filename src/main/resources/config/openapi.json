@@ -1,0 +1,214 @@
+{"components":{"securitySchemes":{"licensestore_auth":{"type": "oauth2","description": "This API uses OAuth 2 with the client credential grant flow.","flows":{"clientCredentials":{"tokenUrl": "https://localhost:6882/token","scopes":{"read:licenses": "read your licenses","server.info.r":"read server info","write:licenses": "modify licenses in your account"}}}}},"schemas":{"license":{"required":["licenseId",
+          "organizationId",
+          "productName",
+          "license_type",
+          "license_max",
+          "license_allocated",
+          "comment"],"properties":{"organizationId":{"type": "string"},"organizationName":{"type": "string"},"contactEmail":{"type": "string"},"contactName":{"type": "string"},"license_type":{"type": "string"},"license_max":{"type": "integer","format": "int32"},"comment":{"type": "string"},"licenseId":{"type": "string"},"contactPhone":{"type": "string"},"productName":{"type": "string"},"license_allocated":{"type": "integer","format": "int32"}}},"Error":{"required":["code",
+          "message"],"properties":{"message":{"type": "string"},"code":{"type": "integer","format": "int32"}}}}},"servers": [
+    {
+      "url": "http://licenseService.swagger.io/v1"
+    }
+  ],"openapi": "3.0.0","paths":{"/licenses/{licenseid}": {
+      "get": {
+        "summary": "Info for a specific license",
+        "operationId": "showlicenseById",
+        "tags": [
+          "licenses"
+        ],
+        "parameters": [
+          {
+            "name": "licenseId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the license to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "licensestore_auth": [
+              "read:licenses"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/license"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific license",
+        "operationId": "deletelicenseById",
+        "tags": [
+          "licenses"
+        ],
+        "parameters": [
+          {
+            "name": "licenseId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the license to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "licensestore_auth": [
+              "write:licenses"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/license"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/licenses": {
+      "get": {
+        "summary": "List all licenses",
+        "operationId": "listlicenses",
+        "tags": [
+          "licenses"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "security": [
+          {
+            "licensestore_auth": [
+              "read:licenses"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An paged array of licenses",
+            "headers": {
+              "x-next": {
+                "description": "A link to the next page of responses",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/license"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a licenses",
+        "operationId": "createlicenses",
+        "requestBody": {
+          "description": "add licenses",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/license"
+              }
+            }
+          }
+        },
+        "tags": [
+          "licenses"
+        ],
+        "security": [
+          {
+            "licensestore_auth": [
+              "read:licenses",
+              "write:licenses"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/server/info":{"get":{"security":[{"licensestore_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    "version": "1.0.0",
+    "title": "Swagger licenseService",
+    "license": {
+      "name": "MIT"
+    }
+  }}
