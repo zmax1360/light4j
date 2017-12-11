@@ -1,7 +1,6 @@
 package com.networknt.Services;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,9 +23,8 @@ public class LicenseServiceImpl implements LicenseService {
 	
 	@Override
 	public ArrayList<License> getall(){
-		ArrayList<License> icenseValue = new ArrayList<>(licenses.values());
 		ArrayList<License> LicensesList = new ArrayList<>();
-		icenseValue.stream().forEach(x->LicensesList.add(licenses.get(x.getLicenseId())));
+		licenses.values().stream().forEach(x->LicensesList.add(licenses.get(x.getLicenseId())));
 		return LicensesList;
 	}
 	@Override
