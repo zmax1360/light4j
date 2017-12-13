@@ -45,5 +45,14 @@ public class LicenseServiceImpl implements LicenseService {
 		licenses.remove(licenseId);
 		
 	}
+
+	@Override
+	public License updateLicense(String licenseId,Map<String, Object> bodyLicense) {
+		// TODO Auto-generated method stub
+		;
+		License  updatedlicenses= new License(bodyLicense);
+		licenses.put(licenseId, updatedlicenses);
+		return updatedlicenses;
+	}
 	
 }

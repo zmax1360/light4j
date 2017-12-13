@@ -14,5 +14,7 @@ public interface LicenseService {
 	License getLicense(String licenseId);
 	
 	void deleteLicense(String licenseId);
+	
+	License updateLicense(String licenseId,Map<String, Object> bodyLicense);
 
 }
