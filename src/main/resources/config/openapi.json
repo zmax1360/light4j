@@ -57,6 +57,64 @@
           }
         }
       },
+      "put": {
+        "summary": "update specific license",
+        "operationId": "updatelicenseById",
+        "requestBody": {
+          "description": "add licenses",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/license"
+              }
+            }
+          }
+        },
+        "tags": [
+          "licenses"
+        ],
+        "parameters": [
+          {
+            "name": "licenseId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the license to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "licensestore_auth": [
+              "read:licenses"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/license"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "summary": "Delete a specific license",
         "operationId": "deletelicenseById",
