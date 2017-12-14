@@ -1,13 +1,17 @@
 package com.networknt.Mapper;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ClassMapper {
+public class ClassMapper<T> {
 	
-	public static String mapper(Object value) throws JsonProcessingException{
+	
+
+	public  T mapper(String value,Class<T> valueType ) throws IOException{
 		final ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(value);
+		return mapper.readValue(value, valueType);
 	}
 
 }

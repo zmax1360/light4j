@@ -1,12 +1,16 @@
 
 package com.networknt.licenses.handler;
 
+import java.util.Date;
+import java.time.Instant;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.Mapper.ClassMapper;
 import com.networknt.Services.LicenseService;
-import com.networknt.licenses.model.Error;
+import com.networknt.licenses.model.Message;
 import com.networknt.licenses.model.License;
 import com.networknt.service.SingletonServiceFactory;
 
@@ -19,20 +23,21 @@ public class LicensesLicenseidGetHandler implements HttpHandler {
 
 	@Override
 	public void handleRequest(HttpServerExchange exchange) throws Exception {
+		final ObjectMapper mapper = new ObjectMapper();
 		LicenseService service = SingletonServiceFactory.getBean(LicenseService.class);
 		String licenseId = exchange.getQueryParameters().get("licenseid").peek();
-		 exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
-		 License l =service.getLicense(licenseId);
-		if(l!=null){
-		exchange.getResponseSender().send(ClassMapper.mapper(l));
-		}else{
-			
-			Error e = new Error();
-			
-			e.setCode(41236157);
-			e.setMessage("licenseId "+ licenseId +" has not found");
+		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
+		License license = service.getLicense(licenseId);
+		String output;
+		if (license == null) {
+			Message e = new Message("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
 			exchange.setStatusCode(404);
-			exchange.getResponseSender().send(ClassMapper.mapper(e));
+			output = mapper.writeValueAsString(e);
+			
+		} else {
+			output = mapper.writeValueAsString(license);
 		}
+		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
+		exchange.getResponseSender().send((output));
 	}
 }

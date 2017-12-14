@@ -9,7 +9,7 @@ public interface LicenseService {
 
 	ArrayList<License> getall();
 
-	void setLicense(Map<String, Object> MapLicense);
+	License setLicense(Map<String, Object> MapLicense);
 
 	License getLicense(String licenseId);
 	

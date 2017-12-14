@@ -28,9 +28,10 @@ public class LicenseServiceImpl implements LicenseService {
 		return LicensesList;
 	}
 	@Override
-	public void setLicense(Map<String, Object> MapLicense) {
-		License l = new License(MapLicense);
-		licenses.put(l.getLicenseId(),l);
+	public License setLicense(Map<String, Object> MapLicense) {
+		License newLicense = new License(MapLicense);
+		licenses.put(newLicense.getLicenseId(),newLicense);
+		return newLicense;
 		
 	}
 
