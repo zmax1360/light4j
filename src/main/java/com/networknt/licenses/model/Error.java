@@ -1,12 +1,11 @@
 
 package com.networknt.licenses.model;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Message {
+public class Error {
 
 	private String message;
 
@@ -20,8 +19,9 @@ public class Message {
 
 	private Integer code;
 
+	
 
-	public Message(String message, long l, String error, String exception, String path, Integer code) {
+	public Error(String message, long l, String error, String exception, String path, Integer code) {
 		super();
 		this.message = message;
 		this.time = l;
@@ -93,7 +93,7 @@ public class Message {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Message Error = (Message) o;
+		Error Error = (Error) o;
 
 		return Objects.equals(message, Error.message) &&
 
@@ -102,8 +102,8 @@ public class Message {
 
 	@Override
 	public int hashCode() {
-		
-		return Objects.hash(message, code, time ,path, error, exception);
+
+		return Objects.hash(message, code, time, path, error, exception);
 	}
 
 	@Override

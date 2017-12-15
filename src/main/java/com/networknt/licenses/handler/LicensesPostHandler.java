@@ -15,6 +15,7 @@ import com.networknt.service.SingletonServiceFactory;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HttpString;
+import io.undertow.util.StatusCodes;
 
 public class LicensesPostHandler implements HttpHandler {
 
@@ -27,7 +28,7 @@ public class LicensesPostHandler implements HttpHandler {
 		LicenseService service = SingletonServiceFactory.getBean(LicenseService.class);
 		final Map<String, Object> body = (Map<String, Object>) exchange.getAttachment(BodyHandler.REQUEST_BODY);
 		License newLicense = service.setLicense(body);
-		exchange.setStatusCode(201);
+		exchange.setStatusCode(StatusCodes.CREATED);
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
 		exchange.getResponseSender().send(mapper.writeValueAsString(newLicense));
 		exchange.endExchange();

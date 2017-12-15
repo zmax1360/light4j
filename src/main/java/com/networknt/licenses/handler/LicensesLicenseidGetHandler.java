@@ -2,15 +2,14 @@
 package com.networknt.licenses.handler;
 
 import java.util.Date;
-import java.time.Instant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.networknt.Mapper.ClassMapper;
+import io.undertow.util.StatusCodes;
 import com.networknt.Services.LicenseService;
-import com.networknt.licenses.model.Message;
+import com.networknt.licenses.model.Error;
 import com.networknt.licenses.model.License;
 import com.networknt.service.SingletonServiceFactory;
 
@@ -30,13 +29,14 @@ public class LicensesLicenseidGetHandler implements HttpHandler {
 		License license = service.getLicense(licenseId);
 		String output;
 		if (license == null) {
-			Message e = new Message("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
-			exchange.setStatusCode(404);
+			Error e = new Error("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
+			exchange.setStatusCode(StatusCodes.NOT_FOUND);
 			output = mapper.writeValueAsString(e);
 			
 		} else {
 			output = mapper.writeValueAsString(license);
 		}
+		exchange.setStatusCode(StatusCodes.ACCEPTED);
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
 		exchange.getResponseSender().send((output));
 	}

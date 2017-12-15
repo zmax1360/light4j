@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.Services.LicenseService;
 import com.networknt.licenses.model.License;
-import com.networknt.licenses.model.Message;
+import com.networknt.licenses.model.Error;
 import com.networknt.service.SingletonServiceFactory;
+import io.undertow.util.StatusCodes;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -28,13 +29,13 @@ public class LicensesLicenseidDeleteHandler implements HttpHandler {
 	
 		String output;
 		if (license == null) {
-			Message e = new Message("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
-			exchange.setStatusCode(404);
+			Error e = new Error("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
+			exchange.setStatusCode(StatusCodes.NOT_FOUND);
 			output = mapper.writeValueAsString(e);
 			exchange.getResponseSender().send((output));
 			
 		} else {
-			exchange.setStatusCode(204);
+			exchange.setStatusCode(StatusCodes.NO_CONTENT);
 		}
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
 		
