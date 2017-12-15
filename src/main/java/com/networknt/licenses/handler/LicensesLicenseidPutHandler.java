@@ -23,7 +23,7 @@ public class LicensesLicenseidPutHandler implements HttpHandler {
 		String licenseId = exchange.getQueryParameters().get("licenseid").peek();
 		final Map<String, Object> body = (Map<String, Object>) exchange.getAttachment(BodyHandler.REQUEST_BODY);
     	
-    	exchange.endExchange();
+    	
     	License license = service.getLicense(licenseId);
 		String output;
 		if (license == null) {
