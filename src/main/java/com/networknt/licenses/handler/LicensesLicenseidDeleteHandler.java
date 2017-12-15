@@ -31,16 +31,13 @@ public class LicensesLicenseidDeleteHandler implements HttpHandler {
 			Message e = new Message("licenseId " + licenseId + " has not found",new Date().getTime(),"not found",this.getClass().getName(),exchange.getRequestURI(),404);					
 			exchange.setStatusCode(404);
 			output = mapper.writeValueAsString(e);
+			exchange.getResponseSender().send((output));
 			
 		} else {
-			service.deleteLicense(licenseId);
-			//class name is not good i need to change the name of the class
-			Message e = new Message("licenseId " + licenseId + " has deleted ",new Date().getTime(),"sucessfull",this.getClass().getName(),exchange.getRequestURI(),200);					
 			exchange.setStatusCode(204);
-			output = mapper.writeValueAsString(e);
 		}
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
-		exchange.getResponseSender().send((output));
+		
 	}
 		
 		

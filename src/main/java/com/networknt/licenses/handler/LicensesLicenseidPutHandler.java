@@ -35,7 +35,7 @@ public class LicensesLicenseidPutHandler implements HttpHandler {
 			
 			service.updateLicense(licenseId,body); 
 			output = mapper.writeValueAsString(license);
-			exchange.setStatusCode(204);
+			exchange.setStatusCode(200);
 			Message e = new Message("licenseId " + licenseId + " resource has updated",new Date().getTime(),"resource has updated",this.getClass().getName(),exchange.getRequestURI(),200);					
 		}
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
