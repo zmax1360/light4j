@@ -36,7 +36,7 @@ public class LicensesLicenseidDeleteHandler implements HttpHandler {
 			service.deleteLicense(licenseId);
 			//class name is not good i need to change the name of the class
 			Message e = new Message("licenseId " + licenseId + " has deleted ",new Date().getTime(),"sucessfull",this.getClass().getName(),exchange.getRequestURI(),200);					
-			exchange.setStatusCode(200);
+			exchange.setStatusCode(204);
 			output = mapper.writeValueAsString(e);
 		}
 		exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
