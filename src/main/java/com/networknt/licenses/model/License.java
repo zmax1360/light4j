@@ -2,12 +2,20 @@
 package com.networknt.licenses.model;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+@Entity
 public class License {
 
-    
-    private String organizationId;
+	@Id
+	private String licenseId;
+	
+	private String organizationId;
     
     private String organizationName;
     
@@ -20,9 +28,7 @@ public class License {
     private Integer license_max;
     
     private String comment;
-    
-    private String licenseId;
-    
+            
     private String contactPhone;
     
     private String productName;

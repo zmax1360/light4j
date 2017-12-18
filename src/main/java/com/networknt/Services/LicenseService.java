@@ -1,5 +1,6 @@
 package com.networknt.Services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -7,14 +8,14 @@ import com.networknt.licenses.model.License;
 
 public interface LicenseService {
 
-	ArrayList<License> getall();
+	ArrayList<License> getall() throws SQLException;
 
-	License setLicense(Map<String, Object> MapLicense);
+	License createLicense(Map<String, Object> MapLicense) throws SQLException;
 
-	License getLicense(String licenseId);
+	License getLicenseById(String licenseId) throws SQLException;
 	
-	void deleteLicense(String licenseId);
+	void deleteLicenseById(String licenseId) throws SQLException;
 	
-	License updateLicense(String licenseId,Map<String, Object> bodyLicense);
+	License updateLicenseById(String licenseId,Map<String, Object> bodyLicense)throws SQLException;
 
 }

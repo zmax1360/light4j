@@ -85,3 +85,16 @@ singletons:
   # Validator Validate request based on OpenAPI 3.0 specification (depending on OpenApiHandler and BodyHandler)
   - com.networknt.openapi.ValidatorHandler
 
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.Driver
+      jdbcUrl: jdbc:h2:~/License_services2;DB_CLOSE_DELAY=-1;INIT=runscript from 'src/main/resources/config/db.sql'
+      username: sa
+      password: 
+      maximumPoolSize: 10
+      useServerPrepStmts: true,
+      cachePrepStmts: true,
+      cacheCallableStmts: true,
+      prepStmtCacheSize: 10,
+      prepStmtCacheSqlLimit: 2048,
+      connectionTimeout: 2000
